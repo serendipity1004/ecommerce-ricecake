@@ -4,6 +4,9 @@ const bodyParser = require('body-parser');
 const exphbs = require('express-handlebars');
 const path = require('path');
 
+//Tools import
+const {supplyDb} = require('./tools/supplyDb');
+
 //Route Imports
 const shopRouter = require('./routes/shop');
 
@@ -13,6 +16,9 @@ let handlebars = exphbs.create({
     defaultLayout: 'main',
     extname:'handlebars'
 });
+
+//Models
+const Product = require('./models/product');
 
 const port = process.env.PORT || 3000;
 
@@ -40,7 +46,23 @@ app.set('view engine', 'handlebars');
 app.use('/shop', shopRouter);
 
 app.get('/', (req, res) => {
-    res.render('./index')
+    // supplyDb();
+    let query = {
+        main : true
+    };
+
+    Product.find(query, (err, result)=>{
+        if(err) throw err;
+
+        console.log('retrieved from db')
+        console.log(result)
+
+        let mainProdArr = result;
+
+        res.render('./index', {
+            mainProdArr,
+        })
+    })
 });
 
 app.listen(port, ()=>{
