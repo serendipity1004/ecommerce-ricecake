@@ -3,12 +3,13 @@
     <title>Test</title>
 
     <!--SEO Meta Tags-->
-    <meta name="description" content="M-Store - Modern E-Commerce Template" />
-    <meta name="keywords" content="shop, e-commerce, modern, minimalist style, responsive, online store, business, mobile, blog, bootstrap, html5, css3, jquery, js, gallery, slider, touch, creative, clean" />
-    <meta name="author" content="Rokaux" />
+    <meta name="description" content="M-Store - Modern E-Commerce Template"/>
+    <meta name="keywords"
+          content="shop, e-commerce, modern, minimalist style, responsive, online store, business, mobile, blog, bootstrap, html5, css3, jquery, js, gallery, slider, touch, creative, clean"/>
+    <meta name="author" content="Rokaux"/>
 
     <!--Mobile Specific Meta Tag-->
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
 
     <!--Favicon-->
     <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
@@ -31,6 +32,10 @@
 
     <!-- Modernizr -->
     <script src="/vendor/mstoretheme/js/vendor/modernizr.custom.js"></script>
+
+    {{#each css}}
+        <script src="{{this}}" rel="stylesheet" media="screen"></script>
+    {{/each}}
 </head>
 <body class="page-preloading">
     <!-- Page Pre-Loader -->
@@ -54,5 +59,10 @@
     <script src="/vendor/mstoretheme/js/vendor/magnific-popup.min.js"></script>
     <script src="/vendor/mstoretheme/js/vendor/nouislider.min.js"></script>
     <script src="/vendor/mstoretheme/js/scripts.js"></script>
+    <script src="/vendor/jquery-validation-1.17.0/dist/jquery.validate.min.js"></script>
+    <script src="/vendor/jquery-validation-1.17.0/dist/additional-methods.min.js"></script>
+    {{#each js}}
+        <script src="{{this}}"></script>
+    {{/each}}
 </body>
 </html>

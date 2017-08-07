@@ -14,11 +14,11 @@ router.get('/', (req, res) => {
         let productArr = result;
 
         res.render('./shop/shop', {
-            productArr
+            productArr,
+            css:['/shop/shop.css'],
+            js:['/shop/shop.js']
         })
     });
-
-
 });
 
 module.exports = router;

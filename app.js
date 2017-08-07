@@ -1,14 +1,20 @@
 const express = require('express');
-const session = require('express-session');
 const bodyParser = require('body-parser');
 const exphbs = require('express-handlebars');
 const path = require('path');
+const session = require('express-session');
+const passport = require('passport');
+const MongoStore = require('connect-mongo')(session);
+const LocalStrategy = require('passport-local').Strategy;
+const bcrypt = require('bcrypt');
+const flash = require('connect-flash');
 
 //Tools import
 const {supplyDb} = require('./tools/supplyDb');
 
 //Route Imports
 const shopRouter = require('./routes/shop');
+const loginRouter = require('./routes/login');
 
 let handlebars = exphbs.create({
     layoutsDir: path.join(__dirname, "views/layouts"),
@@ -19,6 +25,28 @@ let handlebars = exphbs.create({
 
 //Models
 const Product = require('./models/product');
+const User = require('./models/user');
+
+passport.use(new LocalStrategy(
+    function(username, password, done) {
+        User.findOne({ email: username }, function (err, user) {
+            if (err) { return done(err); }
+            if (!user) {
+                return done(null, false, { message: 'Incorrect Email.' });
+            }
+
+            let hash = user.password;
+
+            bcrypt.compare(password, hash, (err, response)=>{
+                if(response === true){
+                    return done(null, user._id)
+                }else {
+                    return done(null, false, {message: 'Incorrect Password'});
+                }
+            });
+        });
+    }
+));
 
 const port = process.env.PORT || 3000;
 
@@ -29,7 +57,17 @@ let mongoose = require('mongoose');
 mongoose.connect('mongodb://127.0.0.1:27017/ricecake');
 
 //Middlewares to use
+app.use(session({
+    secret: 'asdpfoiuenmvawv',
+    store: new MongoStore({mongooseConnection : mongoose.connection}),
+    resave: false,
+    saveUninitialized: false,
+    // cookie: { secure: true }
+}));
 app.use(bodyParser.json());
+app.use(passport.initialize());
+app.use(passport.session());
+app.use(flash());
 
 //Serving static files
 app.use(express.static('views'));
@@ -44,6 +82,7 @@ app.set('view engine', 'handlebars');
 
 //Routes
 app.use('/shop', shopRouter);
+app.use('/login', loginRouter);
 
 app.get('/', (req, res) => {
     // supplyDb();

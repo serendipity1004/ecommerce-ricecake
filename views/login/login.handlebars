@@ -1,0 +1,113 @@
+<main class="content-wrapper">
+
+    <!-- Featured Image -->
+    <div class="featured-image" style="background-image: url(img/featured-image/faq.jpg);"></div>
+
+    <!-- Content -->
+    <section class="container padding-top-3x padding-bottom-3x">
+        <h1>User Account</h1>
+        <div class="row padding-top">
+            <div class="col-md-4 padding-bottom">
+                <h3>Login</h3>
+                <form id="login-form" method="post" class="login-form" enctype="multipart/form-data" action="/login">
+                    <input name="username" type="email" class="form-control" placeholder="Email" required>
+                    <input name="password" type="password" class="form-control" placeholder="Password" required>
+                    <div class="form-footer">
+                        <div class="rememberme">
+                            <label class="checkbox">
+                                <input type="checkbox" checked> Remember me
+                            </label>
+                        </div>
+                        <div class="form-submit">
+                            <button type="submit" class="btn btn-primary btn-block waves-effect waves-light">Login
+                            </button>
+                        </div>
+                    </div>
+                </form><!-- .login-form -->
+            </div><!-- .col-md-4 -->
+            <div class="col-md-4">
+                <h3>Register</h3>
+                <div class="inner">
+                    <form id="register-form" method="post" class="login-form" action="/login/new"
+                          enctype="multipart/form-data">
+                        <input name="email" type="email" class="form-control" placeholder="E-mail" required>
+                        <input name="password" id="password" type="password" class="form-control" placeholder="Password"
+                               required>
+                        <input name="repeat_password" id="repeat_password" type="password" class="form-control"
+                               placeholder="Repeat password" required>
+                        <div class="form-footer">
+                            <div class="rememberme"></div>
+                            <div class="form-submit">
+                                <button id="login-submit-btn" type="submit"
+                                        class="btn btn-primary btn-block waves-effect waves-light">Sign up
+                                </button>
+                            </div>
+                        </div>
+                    </form><!-- .login-form -->
+                </div><!-- .inner -->
+            </div><!-- .col-md-4 -->
+            <div class="col-md-4 padding-top-2x">
+                <a href="#" class="social-signup-btn ssb-facebook">
+                    <i class="socicon-facebook"></i>
+                    <span>Signup with Facebook</span>
+                </a>
+                <a href="#" class="social-signup-btn ssb-google">
+                    <i class="socicon-googleplus"></i>
+                    <span>Signup with Google+</span>
+                </a>
+                <a href="#" class="social-signup-btn ssb-twitter">
+                    <i class="socicon-twitter"></i>
+                    <span>Signup with Twitter</span>
+                </a>
+            </div><!-- .col-md-4 -->
+        </div><!-- .row -->
+        {{#if failed}}
+            <div class="alert alert-danger" role="alert">
+                <strong>Error</strong> Email Exists already
+            </div>
+        {{/if}}
+        {{#if error}}
+            <div class="alert alert-danger" role="alert">
+                <strong>Error</strong> Wrong credentials
+            </div>
+        {{/if}}
+    </section><!-- .container -->
+
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="column">
+            <p class="text-sm">Need support? Call <span class="text-primary">001 (917) 555-4836</span></p>
+            <div class="social-bar text-center space-bottom">
+                <a href="#" class="sb-skype" data-toggle="tooltip" data-placement="top" title="Skype">
+                    <i class="socicon-skype"></i>
+                </a>
+                <a href="#" class="sb-facebook" data-toggle="tooltip" data-placement="top" title="Facebook">
+                    <i class="socicon-facebook"></i>
+                </a>
+                <a href="#" class="sb-google-plus" data-toggle="tooltip" data-placement="top" title=""
+                   data-original-title="Google+">
+                    <i class="socicon-googleplus"></i>
+                </a>
+                <a href="#" class="sb-twitter" data-toggle="tooltip" data-placement="top" title="Twitter">
+                    <i class="socicon-twitter"></i>
+                </a>
+                <a href="#" class="sb-instagram" data-toggle="tooltip" data-placement="top" title=""
+                   data-original-title="Instagram">
+                    <i class="socicon-instagram"></i>
+                </a>
+            </div><!-- .social-bar -->
+            <p class="copyright">&copy; 2016. Made with <i class="text-danger material-icons favorite"></i> by rokaux.
+            </p>
+        </div><!-- .column -->
+        <div class="column">
+            <h3 class="widget-title">
+                Payment Methods
+                <small>We support one of the following payment methods.</small>
+            </h3>
+            <div class="cards"><img src="img/cards.png" alt="Cards"></div>
+            <!-- Scroll To Top Button -->
+            <div class="scroll-to-top-btn"><i class="material-icons trending_flat"></i></div>
+        </div><!-- .column -->
+    </footer><!-- .footer -->
+</main><!-- .content-wrapper -->
