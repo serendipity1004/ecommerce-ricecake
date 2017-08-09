@@ -1,8 +1,8 @@
+<main class="content-wrapper">
 <section class="container padding-top-3x padding-bottom">
 
     <h1 class="space-top-half">Shopping Cart</h1>
     <div class="row padding-top">
-
         <!-- Cart -->
         <div class="col-sm-8 padding-bottom-2x">
             <p class="text-sm">
@@ -11,59 +11,25 @@
             </p>
             <div class="shopping-cart">
                 <!-- Item -->
-                <div class="item">
-                    <a href="shop-single.html" class="item-thumb">
-                        <img src="img/cart/item01.jpg" alt="Item">
-                    </a>
-                    <div class="item-details">
-                        <h3 class="item-title"><a href="shop-single.html">Concrete Lamp</a></h3>
-                        <h4 class="item-price">$85.90</h4>
-                        <div class="count-input">
-                            <a class="incr-btn" data-action="decrease" href="#">–</a>
-                            <input class="quantity" type="text" value="1">
-                            <a class="incr-btn" data-action="increase" href="#">+</a>
+                {{#each productResult}}
+                    <div class="item">
+                        <a href="/shop" class="item-thumb">
+                            <img src="{{imgPath}}" alt="Item">
+                        </a>
+                        <div class="item-details">
+                            <h3 class="item-title"><a href="/shop">{{name}}</a></h3>
+                            <h4 class="item-price">\\{{price}}</h4>
+                            <div class="count-input">
+                                <a class="incr-btn" data-action="decrease" href="#">–</a>
+                                <input class="quantity" type="text" value="{{quantity}}">
+                                <a class="incr-btn" data-action="increase" href="#">+</a>
+                            </div>
                         </div>
-                    </div>
-                    <a href="#" class="item-remove" data-toggle="tooltip" data-placement="top" title="Remove">
-                        <i class="material-icons remove_shopping_cart"></i>
-                    </a>
-                </div><!-- .item -->
-                <!-- Item -->
-                <div class="item">
-                    <a href="shop-single.html" class="item-thumb">
-                        <img src="img/cart/item02.jpg" alt="Item">
-                    </a>
-                    <div class="item-details">
-                        <h3 class="item-title"><a href="shop-single.html">Resin Storage Box</a></h3>
-                        <h4 class="item-price">$38.00</h4>
-                        <div class="count-input">
-                            <a class="incr-btn" data-action="decrease" href="#">–</a>
-                            <input class="quantity" type="text" value="2">
-                            <a class="incr-btn" data-action="increase" href="#">+</a>
-                        </div>
-                    </div>
-                    <a href="#" class="item-remove" data-toggle="tooltip" data-placement="top" title="Remove">
-                        <i class="material-icons remove_shopping_cart"></i>
-                    </a>
-                </div><!-- .item -->
-                <!-- Item -->
-                <div class="item">
-                    <a href="shop-single.html" class="item-thumb">
-                        <img src="img/cart/item03.jpg" alt="Item">
-                    </a>
-                    <div class="item-details">
-                        <h3 class="item-title"><a href="shop-single.html">Ceramic Watch</a></h3>
-                        <h4 class="item-price">$299.00</h4>
-                        <div class="count-input">
-                            <a class="incr-btn" data-action="decrease" href="#">–</a>
-                            <input class="quantity" type="text" value="1">
-                            <a class="incr-btn" data-action="increase" href="#">+</a>
-                        </div>
-                    </div>
-                    <a href="#" class="item-remove" data-toggle="tooltip" data-placement="top" title="Remove">
-                        <i class="material-icons remove_shopping_cart"></i>
-                    </a>
-                </div><!-- .item -->
+                        <a href="#" class="item-remove" data-toggle="tooltip" data-placement="top" title="Remove">
+                            <i class="material-icons remove_shopping_cart"></i>
+                        </a>
+                    </div><!-- .item -->
+                {{/each}}
             </div><!-- .shopping-cart -->
             <!-- Coupon -->
             <div class="">
@@ -80,7 +46,6 @@
                 </form>
             </div>
         </div><!-- .col-sm-8 -->
-
         <!-- Sidebar -->
         <div class="col-md-3 col-md-offset-1 col-sm-4 padding-bottom-2x">
             <aside>
@@ -93,3 +58,4 @@
         </div><!-- .col-md-3.col-sm-4 -->
     </div><!-- .row -->
 </section><!-- .container -->
+</main>

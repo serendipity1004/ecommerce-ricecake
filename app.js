@@ -16,6 +16,7 @@ const {supplyDb} = require('./tools/supplyDb');
 const shopRouter = require('./routes/shop');
 const loginRouter = require('./routes/login');
 const cartRouter = require('./routes/cart');
+const accRouter = require('./routes/account');
 
 let handlebars = exphbs.create({
     layoutsDir: path.join(__dirname, "views/layouts"),
@@ -88,10 +89,12 @@ app.set('view engine', 'handlebars');
 app.use('/shop', shopRouter);
 app.use('/login', loginRouter);
 app.use('/cart', cartRouter);
+app.use('/account', accRouter);
 
 app.use((req, res, next)=>{
     res.locals.login = req.isAuthenticated();
     res.locals.session = req.session;
+    console.log(req.user);
     next();
 });
 
