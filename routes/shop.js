@@ -5,20 +5,30 @@ const router = express.Router();
 const Product = require('../models/product');
 
 router.get('/', (req, res) => {
-    Product.find({}, (err, result) => {
-        if (err) throw err;
+    let addProduct = req.query.add;
+    let cart = req.session.cart;
 
-        console.log('found from datatbase');
-        console.log(result)
+    if(addProduct){
+        if (!cart){
+            cart = [];
+        }
 
-        let productArr = result;
+    }else {
+        Product.find({}, (err, result) => {
+            if (err) throw err;
 
-        res.render('./shop/shop', {
-            productArr,
-            css:['/shop/shop.css'],
-            js:['/shop/shop.js']
-        })
-    });
+            console.log('found from datatbase');
+            console.log(result);
+
+            let productArr = result;
+
+            res.render('./shop/shop', {
+                productArr,
+                css:['/shop/shop.css'],
+                js:['/shop/shop.js']
+            })
+        });
+    }
 });
 
 module.exports = router;

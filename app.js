@@ -15,6 +15,7 @@ const {supplyDb} = require('./tools/supplyDb');
 //Route Imports
 const shopRouter = require('./routes/shop');
 const loginRouter = require('./routes/login');
+const cartRouter = require('./routes/cart');
 
 let handlebars = exphbs.create({
     layoutsDir: path.join(__dirname, "views/layouts"),
@@ -27,6 +28,7 @@ let handlebars = exphbs.create({
 const Product = require('./models/product');
 const User = require('./models/user');
 
+//Passport Configuration
 passport.use(new LocalStrategy(
     function(username, password, done) {
         User.findOne({ email: username }, function (err, user) {
@@ -59,12 +61,14 @@ mongoose.connect('mongodb://127.0.0.1:27017/ricecake');
 //Middlewares to use
 app.use(session({
     secret: 'asdpfoiuenmvawv',
-    store: new MongoStore({mongooseConnection : mongoose.connection}),
+    store: new MongoStore({
+        mongooseConnection : mongoose.connection
+    }),
     resave: false,
     saveUninitialized: false,
-    // cookie: { secure: true }
+    // cookie: { maxAge: 24 * 60 * 60 * 1000 }
 }));
-app.use(bodyParser.json());
+app.use(bodyParser());
 app.use(passport.initialize());
 app.use(passport.session());
 app.use(flash());
@@ -83,6 +87,13 @@ app.set('view engine', 'handlebars');
 //Routes
 app.use('/shop', shopRouter);
 app.use('/login', loginRouter);
+app.use('/cart', cartRouter);
+
+app.use((req, res, next)=>{
+    res.locals.login = req.isAuthenticated();
+    res.locals.session = req.session;
+    next();
+});
 
 app.get('/', (req, res) => {
     // supplyDb();
@@ -93,8 +104,8 @@ app.get('/', (req, res) => {
     Product.find(query, (err, result)=>{
         if(err) throw err;
 
-        console.log('retrieved from db')
-        console.log(result)
+        console.log('retrieved from db');
+        console.log(result);
 
         let mainProdArr = result;
 
