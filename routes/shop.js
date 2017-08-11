@@ -10,37 +10,20 @@ router.get('/', (req, res) => {
     let prodId = req.query.add;
     let match = false;
 
-    console.log('add product is')
-    console.log(addProduct)
-    console.log(cart)
+    console.log('add product is');
+    console.log(addProduct);
+    console.log(cart);
 
-    if (addProduct !== undefined) {
-        if(cart === undefined){
-            req.session.cart = [{
-                prodId,
-                quantity:1
-            }]
-        }else{
-            let pass = false;
-            for(let index in cart){
-                let curProd = cart[index];
-
-                if(curProd.prodId === prodId){
-                    curProd.quantity += 1;
-                    req.session.cart = cart;
-                    pass = true;
-                    break;
-                }
-            }
-            if(!pass){
-                cart.push({
-                    prodId,
-                    quantity:1
-                })
-                req.session.cart = cart;
-            }
-        }
+    if(!cart){
+        cart = {};
+        cart[prodId] = 1;
+    }else if(!cart[prodId]){
+        cart[prodId] = 1;
+    }else{
+        cart[prodId] += 1;
     }
+
+    req.session.cart = cart;
 
     Product.find({}, (err, result) => {
         if (err) throw err;

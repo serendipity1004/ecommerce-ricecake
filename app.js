@@ -93,7 +93,7 @@ app.use('/account', accRouter);
 
 app.use((req, res, next)=>{
     res.locals.login = req.isAuthenticated();
-    res.locals.session = req.session;
+    // res.locals.session = req.session;
     console.log(req.user);
     next();
 });
