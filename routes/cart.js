@@ -5,40 +5,41 @@ const router = express.Router();
 const Product = require('../models/product');
 
 router.get('/', (req, res) => {
-    let sessionCart = req.session.cart;
-    let nameArray = [];
+    let cart = req.session.cart;
 
-    for(let index in sessionCart){
-        let curProd = sessionCart[index];
+    let keys = Object.keys(cart);
 
-        nameArray.push(curProd.prodId)
-    }
+    console.log(keys)
 
     let productQuery = {
-        _id: {$in: nameArray}
+        _id:{$in:keys}
     };
 
-    console.log(nameArray)
+    Product.find(productQuery, (err, productResult) => {
+        if(err) throw err;
+        let total = 0;
 
-    Product.find(productQuery, (err, productResult)=>{
-        console.log('mongo caling')
         console.log(productResult)
-        for(let prodIndex in productResult){
-            let curProduct = productResult[prodIndex];
-            for(let cartIndex in sessionCart){
-                let curCartProd = sessionCart[cartIndex];
 
-                curProduct['quantity'] = curCartProd.quantity;
-                productResult[prodIndex] = curProduct;
-            }
+        for(let index in productResult){
+
+            let curProduct = productResult[index];
+            let orderQuantity = cart[productResult[index]['_id']];
+
+
+            total += (curProduct.price * orderQuantity)
+
+            productResult[index]['orderQuantity'] = orderQuantity
         }
-
-        console.log(productResult);
 
         res.render('./cart/cart', {
             productResult,
+            total,
+            css:['/cart/cart.css'],
+            js:['/cart/cart.js']
         })
-    });
+    })
+
 });
 
 module.exports = router;

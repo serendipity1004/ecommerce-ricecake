@@ -8,6 +8,7 @@ const MongoStore = require('connect-mongo')(session);
 const LocalStrategy = require('passport-local').Strategy;
 const bcrypt = require('bcrypt');
 const flash = require('connect-flash');
+const saltRounds = 10;
 
 //Tools import
 const {supplyDb} = require('./tools/supplyDb');
@@ -17,6 +18,9 @@ const shopRouter = require('./routes/shop');
 const loginRouter = require('./routes/login');
 const cartRouter = require('./routes/cart');
 const accRouter = require('./routes/account');
+
+//API Imports
+const shopApi = require('./routes/api/shop');
 
 let handlebars = exphbs.create({
     layoutsDir: path.join(__dirname, "views/layouts"),
@@ -91,15 +95,38 @@ app.use('/login', loginRouter);
 app.use('/cart', cartRouter);
 app.use('/account', accRouter);
 
+//API routes
+app.use('/api/shop', shopApi);
+
 app.use((req, res, next)=>{
     res.locals.login = req.isAuthenticated();
     // res.locals.session = req.session;
+    console.log('current user is')
     console.log(req.user);
     next();
 });
 
 app.get('/', (req, res) => {
     // supplyDb();
+
+    // let password = 'password123';
+    // bcrypt.hash(password, saltRounds, (err, hash) => {
+    //     if(err) throw err;
+    //
+    //     let email = 'jihochoi1123@gmail.com'
+    //     password = hash;
+    //
+    //     let user = new User ({
+    //         email,
+    //         password
+    //     });
+    //
+    //     user.save((err, result) => {
+    //         console.log('added')
+    //     })
+    // });
+
+
     let query = {
         main : true
     };
@@ -107,8 +134,6 @@ app.get('/', (req, res) => {
     Product.find(query, (err, result)=>{
         if(err) throw err;
 
-        console.log('retrieved from db');
-        console.log(result);
 
         let mainProdArr = result;
 
