@@ -7,6 +7,7 @@ const session = require('express-session');
 const passport = require('passport');
 const MongoStore = require('connect-mongo')(session);
 const LocalStrategy = require('passport-local').Strategy;
+const FacebookStrategy = require('passport-facebook').Strategy;
 const bcrypt = require('bcrypt');
 const flash = require('connect-flash');
 const saltRounds = 10;
@@ -14,7 +15,7 @@ const https = require('https');
 const httpsOptions = {
     key : fs.readFileSync('example.key'),
     cert : fs.readFileSync('example.crt')
-}
+};
 
 //Tools import
 const {supplyDb} = require('./tools/supplyDb');
@@ -47,6 +48,31 @@ const User = require('./models/user');
 passport.use(new LocalStrategy(
     function(username, password, done) {
         User.findOne({ email: username }, function (err, user) {
+            if (err) { return done(err); }
+            if (!user) {
+                return done(null, false, { message: 'Incorrect Email.' });
+            }
+
+            let hash = user.password;
+
+            bcrypt.compare(password, hash, (err, response)=>{
+                if(response === true){
+                    return done(null, user._id)
+                }else {
+                    return done(null, false, {message: 'Incorrect Password'});
+                }
+            });
+        });
+    }
+));
+
+passport.use(new FacebookStrategy({
+        clientID: 1238693662908135,
+        clientSecret: 'c8d05e564280b36575ab3459a4164b0a',
+        callbackURL: "http://www.example.com/auth/facebook/callback"
+    },
+    function(accessToken, refreshToken, profile, done) {
+        User.findOne({ email: profile.email[0].value }, function (err, user) {
             if (err) { return done(err); }
             if (!user) {
                 return done(null, false, { message: 'Incorrect Email.' });
@@ -159,7 +185,7 @@ app.get('/', (req, res) => {
 
 https.createServer(httpsOptions, app).listen(port, ()=>{
     console.log('server listening at 3000')
-})
+});
 
 // app.listen(port, ()=>{
 //     console.log(`Server has started at port ${port}`)

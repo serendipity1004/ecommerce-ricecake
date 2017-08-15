@@ -13,8 +13,6 @@ const User = require('../models/user');
 let uploads = multer({dest: 'public/temp'});
 
 router.get('/', (req, res) => {
-
-
     let flash = req.flash('error').length !== 0 ? true: false;
 
     console.log(flash);
@@ -30,6 +28,13 @@ router.post('/', uploads.fields([{name:'password'}, {name:'username'}]), passpor
     successRedirect: '/shop',
     failureRedirect: '/login',
     failureFlash: true
+}));
+
+router.get('/facebook', passport.authenticate('facebook'));
+
+router.get('/facebook/callback', passport.authenticate('facebook', {
+    successRedirect: '/',
+    failureRedirect: '/login'
 }));
 
 // router.post('/', uploads.fields([{name: 'email'}, {name: 'password'}]), (req, res) => {

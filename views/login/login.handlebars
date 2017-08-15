@@ -30,8 +30,8 @@
                 <div class="inner">
                     <form id="register-form" method="post" class="login-form" action="/login/new"
                           enctype="multipart/form-data">
-                        <input id="first-name" type="text" class="form-control" placeholder="First Name">
-                        <input id="last-name" type="text" class="form-control" placeholder="Last Name">
+                        <input name="firstName" id="first-name" type="text" class="form-control" placeholder="First Name">
+                        <input name="lastName" id="last-name" type="text" class="form-control" placeholder="Last Name">
                         <input name="email" id="register-email" type="email" class="form-control" placeholder="E-mail" required>
                         <input name="password" id="register-password" type="password" class="form-control" placeholder="Password"
                                required>
@@ -49,15 +49,15 @@
                 </div><!-- .inner -->
             </div><!-- .col-md-4 -->
             <div class="col-md-4 padding-top-2x">
-                <a href="#" class="social-signup-btn ssb-facebook">
+                <a href="/login/facebook" class="social-signup-btn ssb-facebook">
                     <i class="socicon-facebook"></i>
                     <span>Signup with Facebook</span>
                 </a>
-                <a href="#" class="social-signup-btn ssb-google">
+                <a href="/login/google" class="social-signup-btn ssb-google">
                     <i class="socicon-googleplus"></i>
                     <span>Signup with Google+</span>
                 </a>
-                <a href="#" class="social-signup-btn ssb-twitter">
+                <a href="/login/twitter" class="social-signup-btn ssb-twitter">
                     <i class="socicon-twitter"></i>
                     <span>Signup with Twitter</span>
                 </a>

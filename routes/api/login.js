@@ -7,11 +7,14 @@ const mongoose = require('mongoose');
 const nodemailer = require('nodemailer');
 const User = require('../../models/user');
 const bcrypt = require('bcrypt');
+const URLSafeBase64 = require('urlsafe-base64');
 
 router.post('/new', (req, res) => {
 
     let email = req.body.email;
     let password = req.body.password;
+    let lastname = req.body.lastName;
+    let firstname = req.body.firstName;
 
     console.log(email);
 
@@ -28,14 +31,18 @@ router.post('/new', (req, res) => {
                 accountCreated: false
             })
         } else {
-            bcrypt.hash(email, 10, (err, verificationHash) => {
+            bcrypt.hash(email + Date.now(), 10, (err, verificationHash) => {
                 bcrypt.hash(password, 10, (err, passwordHash) => {
                     if (err)throw err;
+
+                    let uriEncodedVerificationHash = encodeURIComponent(verificationHash);
 
                     let unverfieidUser = new User({
                         email,
                         password:passwordHash,
-                        verificationHash
+                        verificationHash,
+                        firstname,
+                        lastname
                     });
 
                     unverfieidUser.save((err, result) => {
@@ -51,7 +58,7 @@ router.post('/new', (req, res) => {
                             }
                         });
 
-                        let verificationUrl = `https://localhost:3000/verify-email/${verificationHash}`;
+                        let verificationUrl = `https://localhost:3000/verify-email/${uriEncodedVerificationHash}`;
 
                         let mailOptions = {
                             from: '"Baraem Customer Service" <DO_NOT_REPLY@baraemcake.com>',

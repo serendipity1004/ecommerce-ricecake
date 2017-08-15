@@ -5,6 +5,12 @@ $('#register-form').validate({
             minlength: 8,
             maxlength: 16
         },
+        firstName:{
+            required:true
+        },
+        lastName: {
+            required:true
+        },
         repeat_password: {
             equalTo: "#repeat_password",
             minlength: 8,
@@ -12,7 +18,19 @@ $('#register-form').validate({
         }
     },
     submitHandler: function (form) {
-        form.submit()
+        let email = $('#register-email').val();
+        let password = $('#register-password').val();
+
+        $.post('/api/login/new', {
+            email,
+            password
+        }, function (data) {
+            if(data.userExists){
+                console.log('user already exists')
+            }else if (data.userExists && data.accountCreated){
+                console.log('verification email has been sent')
+            }
+        })
     }
 });
 

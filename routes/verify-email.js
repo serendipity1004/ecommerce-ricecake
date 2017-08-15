@@ -14,9 +14,12 @@ router.get('/:hash', (req, res) => {
         verificationHash
     };
 
-    User.update(userQuery, {
-        verified:true,
-        verificationHash:undefined
+    User.findOneAndUpdate(userQuery, {
+        $set:{
+            verified:true,
+            verificationHash:undefined
+        }
+
     }, (err, result)=>{
         console.log(result)
     });
