@@ -184,7 +184,7 @@ app.get('/', (req, res) => {
 });
 
 https.createServer(httpsOptions, app).listen(port, ()=>{
-    console.log('server listening at 3000')
+    console.log(`server listening at ${port}`)
 });
 
 // app.listen(port, ()=>{
