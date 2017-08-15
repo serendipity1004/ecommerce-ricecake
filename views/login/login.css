@@ -1,0 +1,4 @@
+#name-divider{
+    display: flex;
+    flex-direction:column;
+}

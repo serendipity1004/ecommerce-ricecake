@@ -8,6 +8,7 @@ let productSchema = new Schema({
     imgPath: {type: String, required: true},
     stock: {type: Number, required: true},
     main:{type: Boolean},
+    phoneNumber: {type:Number}
 });
 
 let Product = mongoose.model('Product', productSchema);

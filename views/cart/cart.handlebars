@@ -21,13 +21,15 @@
                             <h4 class="item-price">{{price}}</h4>
                             <div class="count-input">
                                 <a class="incr-btn decrease" href="#">–</a>
-                                <input class="quantity" type="text" value="{{orderQuantity}}">
+                                <input id="prod-id" type="hidden" value="{{_id}}">
+                                <input id="quantity" class="quantity" type="text" value="{{orderQuantity}}">
+                                <input id="price" type="hidden" value="{{price}}">
                                 <a class="incr-btn increase" href="#">+</a>
                             </div>
                         </div>
-                        <a href="#" class="item-remove" data-toggle="tooltip" data-placement="top" title="Remove">
+                        <button class="item-remove">
                             <i class="material-icons remove_shopping_cart"></i>
-                        </a>
+                        </button>
                     </div><!-- .item -->
                 {{/each}}
             </div><!-- .shopping-cart -->
@@ -52,8 +54,8 @@
                 <h3 class="toolbar-title">Cart subtotal:</h3>
                 <h4 class="amount">{{total}}</h4>
                 <p class="text-sm text-gray">* Note: This amount does not include costs for international shipping. You will be able to calculate shipping costs on checkout.</p>
-                <a href="#" class="btn btn-default btn-block waves-effect waves-light">Update Cart</a>
-                <a href="checkout.html" class="btn btn-primary btn-block waves-effect waves-light space-top-none">Checkout</a>
+                <button id="update-cart-btn" class="btn btn-default btn-block waves-effect waves-light">Update Cart</button>
+                <button id="checkout-btn" class="btn btn-primary btn-block waves-effect waves-light space-top-none">Checkout</button>
             </aside>
         </div><!-- .col-md-3.col-sm-4 -->
     </div><!-- .row -->

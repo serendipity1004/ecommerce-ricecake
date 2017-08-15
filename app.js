@@ -1,6 +1,7 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const exphbs = require('express-handlebars');
+const fs = require('fs');
 const path = require('path');
 const session = require('express-session');
 const passport = require('passport');
@@ -9,6 +10,11 @@ const LocalStrategy = require('passport-local').Strategy;
 const bcrypt = require('bcrypt');
 const flash = require('connect-flash');
 const saltRounds = 10;
+const https = require('https');
+const httpsOptions = {
+    key : fs.readFileSync('example.key'),
+    cert : fs.readFileSync('example.crt')
+}
 
 //Tools import
 const {supplyDb} = require('./tools/supplyDb');
@@ -18,9 +24,13 @@ const shopRouter = require('./routes/shop');
 const loginRouter = require('./routes/login');
 const cartRouter = require('./routes/cart');
 const accRouter = require('./routes/account');
+const verifyemailRouter = require('./routes/verify-email');
 
 //API Imports
 const shopApi = require('./routes/api/shop');
+const cartApi = require('./routes/api/cart');
+const globalApi = require('./routes/api/global');
+const loginApi = require('./routes/api/login');
 
 let handlebars = exphbs.create({
     layoutsDir: path.join(__dirname, "views/layouts"),
@@ -94,14 +104,18 @@ app.use('/shop', shopRouter);
 app.use('/login', loginRouter);
 app.use('/cart', cartRouter);
 app.use('/account', accRouter);
+app.use('/verify-email', verifyemailRouter);
 
 //API routes
 app.use('/api/shop', shopApi);
+app.use('/api/cart', cartApi);
+app.use('/api/global', globalApi);
+app.use('/api/login', loginApi);
 
 app.use((req, res, next)=>{
     res.locals.login = req.isAuthenticated();
     // res.locals.session = req.session;
-    console.log('current user is')
+    console.log('current user is');
     console.log(req.user);
     next();
 });
@@ -143,7 +157,11 @@ app.get('/', (req, res) => {
     })
 });
 
-app.listen(port, ()=>{
-    console.log(`Server has started at port ${port}`)
-});
+https.createServer(httpsOptions, app).listen(port, ()=>{
+    console.log('server listening at 3000')
+})
+
+// app.listen(port, ()=>{
+//     console.log(`Server has started at port ${port}`)
+// });
 

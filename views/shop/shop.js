@@ -8,5 +8,8 @@ $('.add-to-cart').click(function (e) {
         prodId:prodId
     }, function (result) {
         console.log('added ' + result)
+        $.post('/api/global/cartAmount',{}, function (result) {
+            $('#number-in-cart').text(result.noOfItems)
+        });
     })
-})
+});

@@ -7,6 +7,11 @@
 jQuery(document).ready(function($) {
 	'use strict';
 
+	//added
+	$.post('/api/global/cartAmount',{}, function (result) {
+		$('#number-in-cart').text(result.noOfItems)
+    });
+
 	// Check if Page Scrollbar is visible
 	//------------------------------------------------------------------------------
 	var hasScrollbar = function() {

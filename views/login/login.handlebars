@@ -1,7 +1,7 @@
 <main class="content-wrapper">
 
     <!-- Featured Image -->
-    <div class="featured-image" style="background-image: url(img/featured-image/faq.jpg);"></div>
+    <div class="featured-image" style="background-image: url(/img/featured-image/faq.jpg);"></div>
 
     <!-- Content -->
     <section class="container padding-top-3x padding-bottom-3x">
@@ -19,7 +19,7 @@
                             </label>
                         </div>
                         <div class="form-submit">
-                            <button type="submit" class="btn btn-primary btn-block waves-effect waves-light">Login
+                            <button id="login-submit-btn" type="submit" class="btn btn-primary btn-block waves-effect waves-light">Login
                             </button>
                         </div>
                     </div>
@@ -30,15 +30,17 @@
                 <div class="inner">
                     <form id="register-form" method="post" class="login-form" action="/login/new"
                           enctype="multipart/form-data">
-                        <input name="email" type="email" class="form-control" placeholder="E-mail" required>
-                        <input name="password" id="password" type="password" class="form-control" placeholder="Password"
+                        <input id="first-name" type="text" class="form-control" placeholder="First Name">
+                        <input id="last-name" type="text" class="form-control" placeholder="Last Name">
+                        <input name="email" id="register-email" type="email" class="form-control" placeholder="E-mail" required>
+                        <input name="password" id="register-password" type="password" class="form-control" placeholder="Password"
                                required>
                         <input name="repeat_password" id="repeat_password" type="password" class="form-control"
                                placeholder="Repeat password" required>
                         <div class="form-footer">
                             <div class="rememberme"></div>
                             <div class="form-submit">
-                                <button id="login-submit-btn" type="submit"
+                                <button id="signup-submit-btn" type="submit"
                                         class="btn btn-primary btn-block waves-effect waves-light">Sign up
                                 </button>
                             </div>
@@ -105,7 +107,7 @@
                 Payment Methods
                 <small>We support one of the following payment methods.</small>
             </h3>
-            <div class="cards"><img src="img/cards.png" alt="Cards"></div>
+            <div class="cards"><img src="/img/cards.png" alt="Cards"></div>
             <!-- Scroll To Top Button -->
             <div class="scroll-to-top-btn"><i class="material-icons trending_flat"></i></div>
         </div><!-- .column -->

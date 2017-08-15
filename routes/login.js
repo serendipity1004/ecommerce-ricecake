@@ -17,7 +17,7 @@ router.get('/', (req, res) => {
 
     let flash = req.flash('error').length !== 0 ? true: false;
 
-    console.log(flash)
+    console.log(flash);
 
     res.render('./login/login', {
         error: flash,
@@ -52,51 +52,51 @@ router.post('/', uploads.fields([{name:'password'}, {name:'username'}]), passpor
 //     })
 // });
 
-router.post('/new', uploads.fields([{name: 'email'}, {name: 'password'}]), (req, res) => {
-
-    User.findOne({email:req.body.email}, (err, result)=>{
-        if(err) throw err;
-
-        console.log(result)
-
-        if(result !== null){
-            res.render('./login/login', {
-                failed: true,
-            })
-        }else {
-            bcrypt.hash(req.body.password, saltRounds, (err, hash) => {
-                if (err) throw err;
-
-                const password = hash;
-                const email = req.body.email;
-
-                console.log(email)
-
-                let user = new User({
-                    email,
-                    password
-                });
-
-                user.save((err, result) => {
-                    if (err) throw err;
-
-                    console.log('stored user');
-
-                    User.findOne({_id:result._id}, (err, result) => {
-                        if (err) throw err;
-
-                        let userId = result._id;
-
-                        console.log(userId);
-                        req.login(userId, (err) => {
-                            res.redirect('/')
-                        });
-                    });
-                })
-            })
-        }
-    });
-});
+// router.post('/new', uploads.fields([{name: 'email'}, {name: 'password'}]), (req, res) => {
+//
+//     User.findOne({email:req.body.email}, (err, result)=>{
+//         if(err) throw err;
+//
+//         console.log(result)
+//
+//         if(result !== null){
+//             res.render('./login/login', {
+//                 failed: true,
+//             })
+//         }else {
+//             bcrypt.hash(req.body.password, saltRounds, (err, hash) => {
+//                 if (err) throw err;
+//
+//                 const password = hash;
+//                 const email = req.body.email;
+//
+//                 console.log(email)
+//
+//                 let user = new User({
+//                     email,
+//                     password
+//                 });
+//
+//                 user.save((err, result) => {
+//                     if (err) throw err;
+//
+//                     console.log('stored user');
+//
+//                     User.findOne({_id:result._id}, (err, result) => {
+//                         if (err) throw err;
+//
+//                         let userId = result._id;
+//
+//                         console.log(userId);
+//                         req.login(userId, (err) => {
+//                             res.redirect('/')
+//                         });
+//                     });
+//                 })
+//             })
+//         }
+//     });
+// });
 
 passport.serializeUser(function(userId, done) {
     done(null, userId);
