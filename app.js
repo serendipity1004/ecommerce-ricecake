@@ -12,6 +12,7 @@ const bcrypt = require('bcrypt');
 const flash = require('connect-flash');
 const saltRounds = 10;
 const https = require('https');
+const hbs = require('handlebars');
 const httpsOptions = {
     key : fs.readFileSync('example.key'),
     cert : fs.readFileSync('example.crt')
@@ -26,6 +27,11 @@ const loginRouter = require('./routes/login');
 const cartRouter = require('./routes/cart');
 const accRouter = require('./routes/account');
 const verifyemailRouter = require('./routes/verify-email');
+const aboutRouter = require('./routes/about');
+const galleryRouter = require('./routes/gallery');
+const blogRouter = require('./routes/blog');
+const contactsRouter = require('./routes/contacts');
+const faqRouter = require('./routes/faq');
 
 //API Imports
 const shopApi = require('./routes/api/shop');
@@ -131,6 +137,11 @@ app.use('/login', loginRouter);
 app.use('/cart', cartRouter);
 app.use('/account', accRouter);
 app.use('/verify-email', verifyemailRouter);
+app.use('/about', aboutRouter);
+app.use('/gallery', galleryRouter);
+app.use('/blog', blogRouter);
+app.use('/contacts', contactsRouter);
+app.use('/faq', faqRouter);
 
 //API routes
 app.use('/api/shop', shopApi);
@@ -187,7 +198,15 @@ https.createServer(httpsOptions, app).listen(port, ()=>{
     console.log(`server listening at ${port}`)
 });
 
+hbs.registerHelper('currentOrNot', (index)=>{
+    if(index === 0){
+        return 'current'
+    }else{
+        return
+    }
+});
+
+//
 // app.listen(port, ()=>{
 //     console.log(`Server has started at port ${port}`)
 // });
-

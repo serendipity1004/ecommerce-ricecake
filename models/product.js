@@ -3,12 +3,18 @@ let Schema = mongoose.Schema;
 
 let productSchema = new Schema({
     name: {type: String, required: true, unique: true},
+    group: {type: String, required: true},
     category:[String],
     price: {type: Number, required: true},
-    imgPath: {type: String, required: true},
+    largeImagePath: {type: String, required: true},
     stock: {type: Number, required: true},
     main:{type: Boolean},
-    phoneNumber: {type:Number}
+    overviewComments:{type:String, required:true},
+    detailedDescription:{type: String, required:true},
+    additionalInfo:{
+        quantity: Number,
+        Source: String
+    }
 });
 
 let Product = mongoose.model('Product', productSchema);
