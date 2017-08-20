@@ -32,38 +32,48 @@ function fillInAddress() {
     let administrativeArea = '';
 
 
-    for (let component in componentForm) {
-        document.getElementById(component).value = '';
-        document.getElementById(component).disabled = false;
-    }
+    // for (let component in componentForm) {
+    //     document.getElementById(component).value = '';
+    //     document.getElementById(component).disabled = false;
+    // }
 
-    console.log(place)
+    console.log(place);
 
+    for(let i = 0; i< place.address_components.length; i++){
+        let postal_code = place.address_components[i].types[0];
 
-    // Get each component of the address from the place details
-    // and fill the corresponding field on the form.
-    for (let i = 0; i < place.address_components.length; i++) {
-        let addressType = place.address_components[i].types[0];
-        let sublocalityType = place.address_components[i].types[1];
-        let curAddress = place.address_components[i]['long_name'] + ' ';
+        console.log(postal_code);
 
-        if(sublocalityType === 'sublocality'){
-            sublocality += curAddress;
-        }else if(addressType === 'administrative_area_level_1'){
-            administrativeArea += curAddress;
-        }else if (sublocalityType === 'country'){
-            $('#country').val(curAddress)
-        }else if(sublocalityType === 'postal_code'){
-            $('#postal_code').val(curAddress);
+        if(postal_code=== 'postal_code'){
+            $('#postal_code').val(place.address_components[i].long_name)
         }
-        // if (componentForm[addressType]) {
-        //     let val = place.address_components[i][componentForm[addressType]];
-        //     document.getElementById(addressType).value = val;
-        // }
     }
 
-    $('#sublocality').val(sublocality.trim());
-    $('#administrative_area').val(administrativeArea.trim());
+
+    // // Get each component of the address from the place details
+    // // and fill the corresponding field on the form.
+    // for (let i = 0; i < place.address_components.length; i++) {
+    //     let addressType = place.address_components[i].types[0];
+    //     let sublocalityType = place.address_components[i].types[1];
+    //     let curAddress = place.address_components[i]['long_name'] + ' ';
+    //
+    //     if(sublocalityType === 'sublocality'){
+    //         sublocality += curAddress;
+    //     }else if(addressType === 'administrative_area_level_1'){
+    //         administrativeArea += curAddress;
+    //     }else if (sublocalityType === 'country'){
+    //         $('#country').val(curAddress)
+    //     }else if(sublocalityType === 'postal_code'){
+    //         $('#postal_code').val(curAddress);
+    //     }
+    //     // if (componentForm[addressType]) {
+    //     //     let val = place.address_components[i][componentForm[addressType]];
+    //     //     document.getElementById(addressType).value = val;
+    //     // }
+    // }
+    //
+    // $('#sublocality').val(sublocality.trim());
+    // $('#administrative_area').val(administrativeArea.trim());
 }
 
 // Bias the autocomplete object to the user's geographical location,

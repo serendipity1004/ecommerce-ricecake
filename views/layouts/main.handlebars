@@ -45,8 +45,11 @@
         </div>
     </div><!-- .page-preloader -->
     <div class="page-wrapper">
-        {{>navbar}}
-        {{{body}}}
+            {{>navbar}}
+        <main class="content-wrapper">
+            {{{body}}}
+            {{>footer}}
+        </main>
     </div>
 
     <script src="/vendor/mstoretheme/js/vendor/jquery-2.1.4.min.js"></script>

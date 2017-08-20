@@ -14,8 +14,8 @@ const saltRounds = 10;
 const https = require('https');
 const hbs = require('handlebars');
 const httpsOptions = {
-    key : fs.readFileSync('example.key'),
-    cert : fs.readFileSync('example.crt')
+    key: fs.readFileSync('example.key'),
+    cert: fs.readFileSync('example.crt')
 };
 
 //Tools import
@@ -43,7 +43,7 @@ let handlebars = exphbs.create({
     layoutsDir: path.join(__dirname, "views/layouts"),
     partialsDir: path.join(__dirname, "views/partials"),
     defaultLayout: 'main',
-    extname:'handlebars'
+    extname: 'handlebars'
 });
 
 //Models
@@ -52,19 +52,21 @@ const User = require('./models/user');
 
 //Passport Configuration
 passport.use(new LocalStrategy(
-    function(username, password, done) {
-        User.findOne({ email: username }, function (err, user) {
-            if (err) { return done(err); }
+    function (username, password, done) {
+        User.findOne({email: username}, function (err, user) {
+            if (err) {
+                return done(err);
+            }
             if (!user) {
-                return done(null, false, { message: 'Incorrect Email.' });
+                return done(null, false, {message: 'Incorrect Email.'});
             }
 
             let hash = user.password;
 
-            bcrypt.compare(password, hash, (err, response)=>{
-                if(response === true){
+            bcrypt.compare(password, hash, (err, response) => {
+                if (response === true) {
                     return done(null, user._id)
-                }else {
+                } else {
                     return done(null, false, {message: 'Incorrect Password'});
                 }
             });
@@ -77,19 +79,21 @@ passport.use(new FacebookStrategy({
         clientSecret: 'c8d05e564280b36575ab3459a4164b0a',
         callbackURL: "http://www.example.com/auth/facebook/callback"
     },
-    function(accessToken, refreshToken, profile, done) {
-        User.findOne({ email: profile.email[0].value }, function (err, user) {
-            if (err) { return done(err); }
+    function (accessToken, refreshToken, profile, done) {
+        User.findOne({email: profile.email[0].value}, function (err, user) {
+            if (err) {
+                return done(err);
+            }
             if (!user) {
-                return done(null, false, { message: 'Incorrect Email.' });
+                return done(null, false, {message: 'Incorrect Email.'});
             }
 
             let hash = user.password;
 
-            bcrypt.compare(password, hash, (err, response)=>{
-                if(response === true){
+            bcrypt.compare(password, hash, (err, response) => {
+                if (response === true) {
                     return done(null, user._id)
-                }else {
+                } else {
                     return done(null, false, {message: 'Incorrect Password'});
                 }
             });
@@ -109,7 +113,7 @@ mongoose.connect('mongodb://127.0.0.1:27017/ricecake');
 app.use(session({
     secret: 'asdpfoiuenmvawv',
     store: new MongoStore({
-        mongooseConnection : mongoose.connection
+        mongooseConnection: mongoose.connection
     }),
     resave: false,
     saveUninitialized: false,
@@ -149,9 +153,13 @@ app.use('/api/cart', cartApi);
 app.use('/api/global', globalApi);
 app.use('/api/login', loginApi);
 
-app.use((req, res, next)=>{
+app.use((req, res, next) => {
     res.locals.login = req.isAuthenticated();
-    // res.locals.session = req.session;
+    if (!req.session.cart) {
+        req.session.cart = {};
+    }
+    console.log('current cart is');
+    console.log(req.session.cart);
     console.log('current user is');
     console.log(req.user);
     next();
@@ -160,7 +168,7 @@ app.use((req, res, next)=>{
 app.get('/', (req, res) => {
     // supplyDb();
 
-    // let password = 'password123';
+    let password = 'password123';
     // bcrypt.hash(password, saltRounds, (err, hash) => {
     //     if(err) throw err;
     //
@@ -179,11 +187,11 @@ app.get('/', (req, res) => {
 
 
     let query = {
-        main : true
+        main: true
     };
 
-    Product.find(query, (err, result)=>{
-        if(err) throw err;
+    Product.find(query, (err, result) => {
+        if (err) throw err;
 
 
         let mainProdArr = result;
@@ -194,16 +202,20 @@ app.get('/', (req, res) => {
     })
 });
 
-https.createServer(httpsOptions, app).listen(port, ()=>{
+https.createServer(httpsOptions, app).listen(port, () => {
     console.log(`server listening at ${port}`)
 });
 
-hbs.registerHelper('currentOrNot', (index)=>{
-    if(index === 0){
+hbs.registerHelper('currentOrNot', (index) => {
+    if (index === 0) {
         return 'current'
-    }else{
+    } else {
         return
     }
+});
+
+hbs.registerHelper('displayFirstName', (firstName) => {
+    return
 });
 
 //

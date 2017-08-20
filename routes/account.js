@@ -3,6 +3,14 @@ const router = express.Router();
 
 const User = require('../models/user');
 
+router.use((req, res, next) => {
+    if(req.user){
+        next()
+    }else {
+        res.redirect('/login')
+    }
+});
+
 router.get('/', (req, res) => {
 
     let curUser = req.user;

@@ -24,7 +24,7 @@ router.get('/', (req, res) => {
     })
 });
 
-router.post('/', uploads.fields([{name:'password'}, {name:'username'}]), passport.authenticate('local',{
+router.post('/', passport.authenticate('local',{
     successRedirect: '/shop',
     failureRedirect: '/login',
     failureFlash: true

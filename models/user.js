@@ -6,7 +6,7 @@ let userSchema = new Schema({
     password: {type: String, required: true},
     firstname:{type: String},
     lastname: {type: String},
-    phoneNumber:{type: Number},
+    phoneNumber:{type: String},
     points:{type:Number, default:0},
     joinedOn: {type: Date, required:true, default: Date.now()},
     searchAddress:{type:String},

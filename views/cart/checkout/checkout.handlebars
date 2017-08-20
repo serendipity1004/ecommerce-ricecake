@@ -1,0 +1,116 @@
+<!-- Container -->
+<form method="post" class="container padding-top-3x padding-bottom-2x">
+
+    <h1 class="space-top-half">결제/배송 정보</h1>
+    <div class="row padding-top">
+
+        <!-- Checkout Form -->
+        <div class="col-sm-8 padding-bottom">
+            <div class="panel-group" id="accordion">
+                <div class="panel">
+                    <div class="panel-heading">
+                        <a class="panel-title collapsed" data-toggle="collapse" data-parent="#accordion"
+                           href="#collapseOne">
+                            배송지 주소
+                        </a>
+                    </div>
+                    <div id="collapseOne" class="panel-collapse in" role="tabpanel" aria-expanded="true">
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <!-- Nav Tabs -->
+                                <ul class="nav-tabs" role="tablist">
+                                    <li class="address-tab active"><a href="#tab1" role="tab" data-toggle="tab">주소 1</a></li>
+                                </ul><!-- .nav-tabs -->
+                                <!-- Tab panes -->
+                                <div class="tab-content">
+                                    <div role="tabpanel" class="tab-pane transition fade in active" id="tab1">
+                                        <div class="panel-body text-gray each-address">
+                                            <div class="row">
+                                                <div class="col-sm-6">
+                                                    <div class="form-element">
+                                                        <input type="text" class="form-control firstName address-form" placeholder="이름을 적어주세요">
+                                                    </div>
+                                                </div>
+                                                <div class="col-sm-6">
+                                                    <div class="form-element">
+                                                        <input type="text" class="form-control lastName address-form" placeholder="성을 적어주세요">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-sm-12">
+                                                    <div class="form-element">
+                                                        <input type="text" class="form-control google-map-address address-form"
+                                                               value="{{searchAddress}}" placeholder="주소를 적어주세요">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-sm-6">
+                                                    <div class="form-element">
+                                                        <input type="text" class="form-control post-code address-form" placeholder="우편번호를 적어주세요">
+                                                    </div>
+                                                </div>
+                                                <div class="col-sm-6">
+                                                    <div class="form-element">
+                                                        <input type="text" class="form-control phone-number address-form" placeholder="전화번호를 적어주세요">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div><!-- .tab-content -->
+                            </div><!-- .col-sm-6 -->
+                        </div><!-- .row -->
+                        <button id="more-address-btn" class="btn btn-ghost btn-pill btn-sm btn-primary waves-effect waves-light add-address-btn">주소 추가하기</button>
+                        <button id="save-address-btn" class="btn btn-ghost btn-pill btn-sm btn-danger waves-effect waves-light save-address-btn">주소 저장하기</button>
+                        <div class="row">
+                            <div class="col-sm-12 text-gray" style="font-size: 0.8em">
+                                * 1개 이상의 주소를 사용하실때엔 주소 저장하기를 누르신다음에 주소 추가하기를 눌러주세요
+                            </div>
+                        </div>
+                    </div>
+                </div><!-- .panel -->
+                <div class="panel">
+                    <div class="panel-heading">
+                        <a class="panel-title" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo">
+                            결제 정보
+                        </a>
+                    </div>
+                    <div id="collapseTwo" class="panel-collapse collapse collapse" role="tabpanel"
+                         aria-expanded="false">
+                        <div class="panel-body text-gray">
+                            Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad
+                            squid. 3
+                            wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt
+                            laborum
+                            eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee
+                            nulla
+                            assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred
+                            nesciunt
+                            sapiente ea proident. Ad vegan excepteur butcher vice lomo.
+                        </div>
+                    </div>
+                </div><!-- .panel -->
+            </div><!-- .panel-group -->
+
+        </div><!-- .col-sm-8 -->
+
+        <!-- Sidebar -->
+        <div class="col-md-3 col-md-offset-1 col-sm-4 padding-bottom">
+            <aside>
+                <h3>Cart total:</h3>
+                <h4>{{priceToPay}}</h4>
+                <p class="text-sm text-gray">* Note: This amount includes costs for shipping to address you
+                    provided.</p>
+                <a href="shopping-cart.html" class="btn btn-default btn-ghost icon-left btn-block">
+                    <i class="material-icons arrow_back"></i>
+                    Back To Cart
+                </a>
+                <button id="checkout-btn" class="btn btn-primary btn-block waves-effect waves-light space-top-none">
+                    Checkout
+                </button>
+            </aside>
+        </div><!-- .col-md-3.col-sm-4 -->
+    </div><!-- .row -->
+</form><!-- .container -->

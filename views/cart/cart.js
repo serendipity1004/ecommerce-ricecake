@@ -67,4 +67,4 @@ $('#quantity').change(function (e) {
 
     $('#checkout-btn').attr('disabled', 'disabled');
     updateTotal();
-})
+});

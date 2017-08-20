@@ -11,11 +11,28 @@ router.get('/', (req, res) => {
 
         let productArr = result;
 
-        res.render('./shop/shop', {
-            productArr,
-            css: ['/shop/shop.css'],
-            js: ['/shop/shop.js']
-        })
+        let pivotProduct = Product.aggregate([
+            {
+                $group:
+                    {
+                        _id:"$group",
+                        count:
+                            {
+                                $sum:1
+                            }
+                    }
+            }
+        ]).exec((err, pivotResult)=>{
+            if(err) throw err;
+
+            res.render('./shop/shop', {
+                productArr,
+                noOfProducts: productArr.length,
+                productsPivot:pivotResult,
+                css: ['/shop/shop.css'],
+                js: ['/shop/shop.js']
+            })
+        });
     });
 });
 
@@ -24,22 +41,22 @@ router.get('/detail/:id', (req, res) => {
     console.log(prodId)
 
     let prodQuery = {
-        _id : prodId
+        _id: prodId
     };
 
     Product.findOne(prodQuery, (err, prodResult) => {
-        if(err)throw err;
+        if (err) throw err;
 
         let groupProdQuery = {
-            group : prodResult.group
+            group: prodResult.group
         };
 
         Product.find(groupProdQuery, (err, groupProdResult) => {
-            if(err) throw err;
+            if (err) throw err;
 
             res.render('./shop/detail/detail', {
-                targetProduct:groupProdResult,
-                groupName:groupProdResult[0].group,
+                targetProduct: groupProdResult,
+                groupName: groupProdResult[0].group,
                 css: ['/shop/detail/detail.css'],
                 js: ['/shop/detail/detail.js']
             })

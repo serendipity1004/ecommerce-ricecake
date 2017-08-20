@@ -1,203 +1,135 @@
-<!-- Main Content Wrapper -->
-<main class="content-wrapper">
+<!-- Shop Catalog -->
+<section class="container padding-top-3x padding-bottom-3x">
 
-    <!-- Shop Catalog -->
-    <section class="container padding-top-3x padding-bottom-3x">
+    <!-- Sidebar Toggle / visible only on mobile -->
+    <div class="sidebar-toggle">
+        <i class="material-icons filter_list"></i>
+    </div>
 
-        <!-- Sidebar Toggle / visible only on mobile -->
-        <div class="sidebar-toggle">
-            <i class="material-icons filter_list"></i>
-        </div>
+    <h1 class="space-top-half">구매하기</h1>
+    <div class="row padding-top">
 
-        <h1 class="space-top-half">Shop Boxed Sidebar Left</h1>
-        <div class="row padding-top">
+        <!-- Sidebar (Filters) -->
+        <div class="col-md-3 col-sm-4">
+            <aside class="sidebar">
+                <span class="sidebar-close"><i class="material-icons close"></i></span>
+                <div class="widgets">
 
-            <!-- Sidebar (Filters) -->
-            <div class="col-md-3 col-sm-4">
-                <aside class="sidebar">
-                    <span class="sidebar-close"><i class="material-icons close"></i></span>
-                    <div class="widgets">
+                    <!-- Categories Widget -->
+                    <div class="widget widget-categories">
+                        <h3 class="widget-title">Categories</h3>
+                        <ul>
+                            <li class="active"><a href="#">All {{noOfProducts}}</a></li>
+                            {{#each productsPivot}}
+                                <li>
+                                    <a href="#">{{_id}} {{count}}</a>
+                                    <input type="hidden" value="{{_id}}">
+                                </li>
+                            {{/each}}
+                        </ul>
+                    </div><!-- .widget.widget-categories -->
 
-                        <!-- Categories Widget -->
-                        <div class="widget widget-categories">
-                            <h3 class="widget-title">Categories</h3>
-                            <ul>
-                                <li class="active"><a href="#">All 135</a></li>
-                                <li><a href="#">Furniture 42</a></li>
-                                <li><a href="#">Accessories 56</a></li>
-                                <li><a href="#">Lightning 28</a></li>
-                                <li><a href="#">Clocks 10</a></li>
-                            </ul>
-                        </div><!-- .widget.widget-categories -->
+                    <!-- Sorting Widget -->
+                    <div class="widget widget-sorting">
+                        <h3 class="widget-title">Sort By</h3>
+                        <ul>
+                            <li class="active"><a href="#">
+                                <i class="material-icons sort"></i>
+                                기본
+                            </a></li>
+                            <li><a href="#">
+                                <i class="material-icons favorite_border"></i>
+                                인기순
+                            </a></li>
+                            <li><a href="#">
+                                <i class="material-icons vertical_align_top"></i>
+                                최신순
+                            </a></li>
+                            <li><a href="#">
+                                <i class="material-icons star_border"></i>
+                                점수순
+                            </a></li>
+                            <li><a href="#">
+                                <i class="material-icons sort_by_alpha"></i>
+                                글자순?
+                            </a></li>
+                        </ul>
+                    </div><!-- .widget.widget-sorting -->
 
-                        <!-- Sorting Widget -->
-                        <div class="widget widget-sorting">
-                            <h3 class="widget-title">Sort By</h3>
-                            <ul>
-                                <li class="active"><a href="#">
-                                    <i class="material-icons sort"></i>
-                                    Default
-                                </a></li>
-                                <li><a href="#">
-                                    <i class="material-icons favorite_border"></i>
-                                    Popularity
-                                </a></li>
-                                <li><a href="#">
-                                    <i class="material-icons vertical_align_top"></i>
-                                    Last entries
-                                </a></li>
-                                <li><a href="#">
-                                    <i class="material-icons star_border"></i>
-                                    Avarage rating
-                                </a></li>
-                                <li><a href="#">
-                                    <i class="material-icons sort_by_alpha"></i>
-                                    Alphabetically
-                                </a></li>
-                            </ul>
-                        </div><!-- .widget.widget-sorting -->
+                </div><!-- .widgets -->
+            </aside><!-- .sidebar -->
+        </div><!-- .col-md-3.col-sm-4 -->
 
-                        <!-- Price Range Widget -->
-                        <!-- Please note: Only one Range Slider allowed on the page! -->
-                        <div class="widget widget-catesgories">
-                            <h3 class="widget-title">Price Range</h3>
-                            <form method="post" class="price-range-slider" data-start-min="250" data-start-max="650"
-                                  data-min="0" data-max="1000" data-step="1">
-                                <div class="ui-range-slider"></div>
-                                <footer class="ui-range-slider-footer">
-                                    <div class="column">
-                                        <button type="submit" class="btn btn-ghost btn-sm btn-default">Filter</button>
-                                    </div>
-                                    <div class="column">
-                                        <div class="ui-range-values">
-                                            <div class="ui-range-value-min">
-                                                $<span></span>
-                                                <input type="hidden">
-                                            </div>
-                                            -
-                                            <div class="ui-range-value-max">
-                                                $<span></span>
-                                                <input type="hidden">
-                                            </div>
-                                        </div>
-                                    </div>
-                                </footer>
-                            </form><!-- .price-range-slider -->
-                        </div><!-- .widget.widget-categories -->
-                    </div><!-- .widgets -->
-                </aside><!-- .sidebar -->
-            </div><!-- .col-md-3.col-sm-4 -->
+        <!-- Products Grid -->
+        <div class="col-md-9 col-sm-8">
 
-            <!-- Products Grid -->
-            <div class="col-md-9 col-sm-8">
+            <!--&lt;!&ndash; Shop Bar &ndash;&gt;-->
+            <!--<div class="shop-bar">-->
+            <!--<div class="column">-->
+            <!--<p class="text-sm space-bottom-none">-->
+            <!--<span class="text-gray">Showing</span> 1-12 items-->
+            <!--</p>-->
+            <!--</div>&lt;!&ndash; .column &ndash;&gt;-->
+            <!--<div class="column">-->
+            <!--<form method="get" class="search-box">-->
+            <!--<input type="text" class="form-control" placeholder="Search shop">-->
+            <!--<button type="submit">-->
+            <!--<i class="material-icons search"></i>-->
+            <!--</button>-->
+            <!--</form>&lt;!&ndash; form.search-box &ndash;&gt;-->
+            <!--</div>&lt;!&ndash; .column &ndash;&gt;-->
+            <!--</div>&lt;!&ndash; .shop-bar &ndash;&gt;-->
 
-                <!-- Shop Bar -->
-                <div class="shop-bar">
-                    <div class="column">
-                        <p class="text-sm space-bottom-none">
-                            <span class="text-gray">Showing</span> 1-12 items
-                        </p>
-                    </div><!-- .column -->
-                    <div class="column">
-                        <form method="get" class="search-box">
-                            <input type="text" class="form-control" placeholder="Search shop">
-                            <button type="submit">
-                                <i class="material-icons search"></i>
-                            </button>
-                        </form><!-- form.search-box -->
-                    </div><!-- .column -->
-                </div><!-- .shop-bar -->
+            <div class="row">
 
-                <div class="row">
-
-                    <!-- Item -->
-                    {{#each productArr}}
-                        <div class="col-md-4 col-sm-6">
-                            <div class="shop-item">
-                                <div class="shop-thumbnail">
-                                    <span class="shop-label text-danger">Sale</span>
-                                    <a href="/shop/detail/{{_id}}" class="item-link"></a>
-                                    <img src="{{largeImagePath}}" alt="Shop item">
-                                    <div class="shop-item-tools">
-                                        <a href="#" class="add-to-cart">
-                                            <em>Add to Cart</em>
-                                            <input type="hidden" value="{{_id}}">
-                                            <svg x="0px" y="0px" width="32px" height="32px" viewBox="0 0 32 32">
-                                                <path stroke-dasharray="19.79 19.79" stroke-dashoffset="19.79"
-                                                      fill="none" stroke="#FFFFFF" stroke-width="2"
-                                                      stroke-linecap="square" stroke-miterlimit="10"
-                                                      d="M9,17l3.9,3.9c0.1,0.1,0.2,0.1,0.3,0L23,11"/>
-                                            </svg>
-                                        </a>
-                                    </div>
+                <!-- Item -->
+                {{#each productArr}}
+                    <div class="col-md-4 col-sm-6">
+                        <div class="shop-item">
+                            <div class="shop-thumbnail">
+                                <a href="/shop/detail/{{_id}}" class="item-link"></a>
+                                <img src="{{largeImagePath}}" alt="Shop item">
+                                <div class="shop-item-tools">
+                                    <a href="#" class="add-to-cart">
+                                        <em>장바구니에 넣기</em>
+                                        <input type="hidden" value="{{_id}}">
+                                        <svg x="0px" y="0px" width="32px" height="32px" viewBox="0 0 32 32">
+                                            <path stroke-dasharray="19.79 19.79" stroke-dashoffset="19.79"
+                                                  fill="none" stroke="#FFFFFF" stroke-width="2"
+                                                  stroke-linecap="square" stroke-miterlimit="10"
+                                                  d="M9,17l3.9,3.9c0.1,0.1,0.2,0.1,0.3,0L23,11"/>
+                                        </svg>
+                                    </a>
                                 </div>
-                                <div class="shop-item-details">
-                                    <h3 class="shop-item-title"><a href="/shop/detail/{{_id}}">{{name}}</a></h3>
-                                    <span class="shop-item-price">
-                      <span class="old-price">$49.00</span>
-                                        {{price}}
-                    </span>
-                                </div>
-                            </div><!-- .shop-item -->
-                        </div><!-- .col-md-4.col-sm-6 -->
-                    {{/each}}
-                </div>
-                <hr>
+                            </div>
+                            <div class="shop-item-details">
+                                <a href="/shop/detail/{{_id}}" class="btn btn-ghost btn-sm btn-primary waves-effect waves-light">{{name}}</a>
+                                <a href="/shop/detail/{{_id}}" class="btn btn-ghost btn-sm btn-danger waves-effect waves-light">
+                                    &#65510; {{price}}
+                                </a>
+                            </div>
+                        </div><!-- .shop-item -->
+                    </div><!-- .col-md-4.col-sm-6 -->
+                {{/each}}
+            </div>
+            <hr>
 
-                <!-- Pagination -->
-                <div class="pagination padding-bottom">
-                    <div class="page-numbers">
-                        <a href="#">1</a>
-                        <a href="#">2</a>
-                        <span class="active">3</span>
-                        <a href="#">4</a>
-                        <span>...</span>
-                        <a href="#">10</a>
-                    </div>
-                    <div class="pager">
-                        <a href="#">Prev</a>
-                        <span>|</span>
-                        <a href="#">Next</a>
-                    </div>
+            <!-- Pagination -->
+            <div class="pagination padding-bottom">
+                <div class="page-numbers">
+                    <a href="#">1</a>
+                    <a href="#">2</a>
+                    <span class="active">3</span>
+                    <a href="#">4</a>
+                    <span>...</span>
+                    <a href="#">10</a>
                 </div>
-            </div><!-- .col-md-9 col-sm-8 -->
-        </div><!-- .row -->
-    </section><!-- .container -->
-
-    <!-- Footer -->
-    <footer class="footer">
-        <div class="column">
-            <p class="text-sm">Need support? Call <span class="text-primary">001 (917) 555-4836</span></p>
-            <div class="social-bar text-center space-bottom">
-                <a href="#" class="sb-skype" data-toggle="tooltip" data-placement="top" title="Skype">
-                    <i class="socicon-skype"></i>
-                </a>
-                <a href="#" class="sb-facebook" data-toggle="tooltip" data-placement="top" title="Facebook">
-                    <i class="socicon-facebook"></i>
-                </a>
-                <a href="#" class="sb-google-plus" data-toggle="tooltip" data-placement="top" title=""
-                   data-original-title="Google+">
-                    <i class="socicon-googleplus"></i>
-                </a>
-                <a href="#" class="sb-twitter" data-toggle="tooltip" data-placement="top" title="Twitter">
-                    <i class="socicon-twitter"></i>
-                </a>
-                <a href="#" class="sb-instagram" data-toggle="tooltip" data-placement="top" title=""
-                   data-original-title="Instagram">
-                    <i class="socicon-instagram"></i>
-                </a>
-            </div><!-- .social-bar -->
-            <p class="copyright">&copy; 2016. Made with <i class="text-danger material-icons favorite"></i> by rokaux.
-            </p>
-        </div><!-- .column -->
-        <div class="column">
-            <h3 class="widget-title">
-                Payment Methods
-                <small>We support one of the following payment methods.</small>
-            </h3>
-            <div class="cards"><img src="/img/cards.png" alt="Cards"></div>
-            <!-- Scroll To Top Button -->
-            <div class="scroll-to-top-btn"><i class="material-icons trending_flat"></i></div>
-        </div><!-- .column -->
-    </footer><!-- .footer -->
-</main><!-- .content-wrapper -->
+                <div class="pager">
+                    <a href="#">Prev</a>
+                    <span>|</span>
+                    <a href="#">Next</a>
+                </div>
+            </div>
+        </div><!-- .col-md-9 col-sm-8 -->
+    </div><!-- .row -->
+</section><!-- .container -->
