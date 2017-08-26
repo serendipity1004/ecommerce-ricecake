@@ -13,9 +13,9 @@ let deliveryAddress = new Schema(
         paymentId: {type: Schema.Types.ObjectId},
         paid: {type: Boolean, default: false},
         addedDate: {type: Date, default: Date.now()},
-        product: [
+        products: [
             {
-                id: {type: Schema.Types.ObjectId},
+                productId: {type: Schema.Types.ObjectId},
                 quantity: {type: Number}
             }
         ]

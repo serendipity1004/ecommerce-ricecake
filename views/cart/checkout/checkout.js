@@ -4,6 +4,7 @@ let clientCart = {};
 let quantityDiff = {};
 
 $(document).ready(function () {
+    listenToClassChangeAddressForm();
     quantityDiff = quantityChanger(cart, clientCart);
     let cartKeys = Object.keys(cart);
 
@@ -27,17 +28,19 @@ function resetTabOrder() {
 }
 
 //Add address tab
-$('.add-address-btn').click(function (e) {
+$('#more-address-btn').click(function (e) {
     e.preventDefault();
 
+    listenToClassChangeAddressForm();
+
     let navTab = $('.address-tab:first').clone().removeClass('active')[0];
+    $(navTab).find('a').attr('aria-expanded', false);
     let tabPanel = $('.tab-pane:first').clone().removeClass('active', 'in')[0];
 
     $(tabPanel).find('.form-control').each(function (index, object) {
         console.log(object);
         $(object).val('');
         $(object).parent('.form-element').removeClass('valid error');
-
     });
 
     $('.nav-tabs').append(navTab);
@@ -46,16 +49,18 @@ $('.add-address-btn').click(function (e) {
     resetTabOrder();
     quantityDiff = quantityChanger(cart, clientCart);
 
-});
-
-$('#more-address-btn').click(function (e) {
-    e.preventDefault();
-
-    listenToClassChangeAddressForm();
-
     $(this).prop('disabled', true);
     $(this).removeClass('btn-primary').addClass('btn-default');
 });
+
+// $('.address-tab').click(function (e) {
+//     $(this).siblings('.address-tab').each(function (index, sibling) {
+//         $(sibling).removeClass('active');
+//         $(sibling).find('a').attr('aria-expanded', false).removeClass('active')
+//     });
+//     $(this).addClass('active');
+//     $(this).find('a').attr('aria-expanded', true).addClass('active');
+// });
 
 $('#save-address-btn').click(function (e) {
     e.preventDefault();
@@ -73,8 +78,6 @@ $('#save-address-btn').click(function (e) {
     if (wrongCounts === 0) {
         //call api
         console.log('valid');
-        $('#more-address-btn').prop('disabled', false);
-        $('#more-address-btn').removeClass('btn-default').addClass('btn-primary');
 
         let reqBody = [];
 
@@ -87,6 +90,18 @@ $('#save-address-btn').click(function (e) {
             let postCode = curObject.find('.post-code').val();
             let phoneNumber = curObject.find('.phone-number').val();
             let frontendId = curObject.attr('id');
+            let products = [];
+
+            $(curObject).find('.product-container').each((productIndex, eachProduct)=>{
+                let prodObject = {};
+                let prodId = $(eachProduct).find('.prod-id').val();
+                let prodQuant = $(eachProduct).find('.quantity').val();
+
+                prodObject['productId'] = prodId;
+                prodObject['quantity'] = prodQuant;
+
+                products.push(prodObject);
+            });
 
             let eachBody =
                 {
@@ -95,13 +110,16 @@ $('#save-address-btn').click(function (e) {
                     lastName: lastName,
                     address: address,
                     postCode: postCode,
-                    phoneNumber: phoneNumber
+                    phoneNumber: phoneNumber,
+                    products:products
                 };
             reqBody.push(eachBody);
         });
 
         $.post('/api/cart/checkout/update_address', {reqBody}, function (returnResult) {
             console.log(returnResult);
+            $('#more-address-btn').prop('disabled', false);
+            $('#more-address-btn').removeClass('btn-default').addClass('btn-primary');
         });
 
     } else {
@@ -124,6 +142,7 @@ function listenToClassChangeAddressForm() {
 function quantityChanger(session, client) {
     $('.incr-btn').click(function (e) {
         e.preventDefault();
+
         let curQuantity = $(this).siblings('.quantity').val();
 
         if ($(this).hasClass('decrease')) {

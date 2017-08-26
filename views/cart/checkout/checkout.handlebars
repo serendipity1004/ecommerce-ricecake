@@ -20,11 +20,11 @@
                         <div class="row products-container">
                             {{#each productsInCart}}
                                 <div class="col-md-4 product-container">
-                                    <input class="prod-id" type="hidden" value="{{_id}}">
                                     <img class="col-md-6" src="{{largeImagePath}}"/>
                                     <div class="col-md-6 product-details">
                                         <h5>{{name}}</h5>
                                         <div class="count-input">
+                                            <input class="prod-id" type="hidden" value="{{_id}}">
                                             <a class="incr-btn decrease" href="#">–</a>
                                             <input id="quantity" class="quantity" type="text" value="{{quantity}}">
                                             <input id="price" type="hidden" value="{{price}}">
@@ -48,7 +48,8 @@
                             <div class="col-sm-12">
                                 <!-- Nav Tabs -->
                                 <ul class="nav-tabs" role="tablist">
-                                    <li class="address-tab active"><a href="#tab1" role="tab" data-toggle="tab">주소 1</a>
+                                    <li class="active address-tab">
+                                        <a href="#tab1" role="tab" data-toggle="tab" aria-expanded="true">주소 1</a>
                                     </li>
                                 </ul><!-- .nav-tabs -->
                                 <!-- Tab panes -->
@@ -96,12 +97,12 @@
                                             <div class="row products-container">
                                                 {{#each productsInCart}}
                                                     <div class="col-md-4 product-container">
-                                                        <input class="prod-id" type="hidden" value="{{_id}}">
                                                         <img class="col-md-6" src="{{largeImagePath}}"/>
                                                         <div class="col-md-6 product-details">
                                                             <h5>{{name}}</h5>
                                                             <div class="count-input">
                                                                 <a class="incr-btn decrease" href="#">–</a>
+                                                                <input class="prod-id" type="hidden" value="{{_id}}">
                                                                 <input class="quantity" type="text"
                                                                        value="{{quantity}}">
                                                                 <input class="price" type="hidden" value="{{price}}">

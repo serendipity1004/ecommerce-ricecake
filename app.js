@@ -17,6 +17,7 @@ const httpsOptions = {
     key: fs.readFileSync('example.key'),
     cert: fs.readFileSync('example.crt')
 };
+const sharedsession = require('express-socket.io-session');
 
 //Tools import
 const {supplyDb} = require('./tools/supplyDb');
@@ -109,8 +110,7 @@ let app = express();
 let mongoose = require('mongoose');
 mongoose.connect('mongodb://127.0.0.1:27017/ricecake');
 
-//Middlewares to use
-app.use(session({
+const sessionMiddleware = session({
     secret: 'asdpfoiuenmvawv',
     store: new MongoStore({
         mongooseConnection: mongoose.connection
@@ -118,7 +118,10 @@ app.use(session({
     resave: false,
     saveUninitialized: false,
     // cookie: { maxAge: 24 * 60 * 60 * 1000 }
-}));
+});
+
+//Middlewares to use
+app.use(sessionMiddleware);
 app.use(bodyParser());
 app.use(passport.initialize());
 app.use(passport.session());
@@ -134,6 +137,18 @@ app.set('views', path.join(__dirname, 'views'));
 //View Engine
 app.engine('handlebars', handlebars.engine);
 app.set('view engine', 'handlebars');
+
+app.use((req, res, next) => {
+    res.locals.login = req.isAuthenticated();
+    if (!req.session.cart) {
+        req.session.cart = {};
+    }
+    console.log('express current cart is');
+    console.log(req.session.cart);
+    console.log('current user is');
+    console.log(req.user);
+    next();
+});
 
 //Routes
 app.use('/shop', shopRouter);
@@ -152,18 +167,6 @@ app.use('/api/shop', shopApi);
 app.use('/api/cart', cartApi);
 app.use('/api/global', globalApi);
 app.use('/api/login', loginApi);
-
-app.use((req, res, next) => {
-    res.locals.login = req.isAuthenticated();
-    if (!req.session.cart) {
-        req.session.cart = {};
-    }
-    console.log('current cart is');
-    console.log(req.session.cart);
-    console.log('current user is');
-    console.log(req.user);
-    next();
-});
 
 app.get('/', (req, res) => {
     // supplyDb();
@@ -202,9 +205,35 @@ app.get('/', (req, res) => {
     })
 });
 
-https.createServer(httpsOptions, app).listen(port, () => {
+let server = https.createServer(httpsOptions, app).listen(port, () => {
     console.log(`server listening at ${port}`)
 });
+
+// const io = require('socket.io')(server);
+// io.use(sharedsession(sessionMiddleware, {
+//     autosave: true
+// }));
+// io.on('connection', (socket) => {
+//     console.log('socket current cart is')
+//     console.log(socket.handshake.session.cart)
+//     console.log('socket current user is')
+//     console.log(socket.handshake.session.passport.user)
+//
+//     socket.on('updateCart:ProductQuantity', (requestedObj)=>{
+//         let curCart = socket.handshake.session.cart;
+//
+//         let key = Object.keys(requestedObj)[0];
+//
+//         curCart[key] = requestedObj[key];
+//
+//         socket.handshake.session.cart = curCart;
+//         socket.handshake.session.save();
+//
+//         socket.emit('update:sessionQuantityConf', {
+//
+//         })
+//     })
+// });
 
 hbs.registerHelper('currentOrNot', (index) => {
     if (index === 0) {

@@ -19,8 +19,6 @@ router.post('/remove', (req, res) => {
     let deleteItem = req.body.remove;
     let cart = req.session.cart;
 
-
-    console.log(deleteItem);
     delete cart[deleteItem];
 
     res.json(cart)
@@ -30,14 +28,9 @@ router.post('/checkout/update_address', (req, res) => {
     let addressProfile = req.body.reqBody;
     let mongoPromises = [];
 
-    console.log(addressProfile);
-
-
     for (let index in addressProfile) {
 
         let eachProfile = addressProfile[index];
-        console.log('each profile');
-        console.log(eachProfile);
 
         let frontendId = eachProfile.frontendId;
         let firstName = eachProfile.firstName;
@@ -46,6 +39,7 @@ router.post('/checkout/update_address', (req, res) => {
         let postCode = eachProfile.postCode;
         let phoneNumber = eachProfile.phoneNumber;
         let userId = req.user;
+        let products = eachProfile.products;
 
         let deliveryAddress =
             {
@@ -54,11 +48,14 @@ router.post('/checkout/update_address', (req, res) => {
                 lastName,
                 address,
                 postCode,
-                phoneNumber
+                phoneNumber,
+                products
             };
 
+        console.log(products)
+
         let deliveryAddressPromise = new Promise((resolve, reject) => {
-            DeliveryAddresses.findOneAndUpdate({frontendId}, deliveryAddress, {upsert:true}, (err, deliveryAddressResult) => {
+            DeliveryAddresses.findOneAndUpdate({frontendId, userId}, deliveryAddress, {upsert:true}, (err, deliveryAddressResult) => {
                 if (err) throw err;
 
                 resolve();
@@ -74,7 +71,6 @@ router.post('/checkout/update_address', (req, res) => {
 
             DeliveryAddresses.find(deliveryAddressQuery, (err, deliveryAddressResult) => {
                 if (err) throw err;
-
 
             })
         })

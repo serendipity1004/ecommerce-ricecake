@@ -5,7 +5,7 @@ const router = express.Router();
 const Product = require('../models/product');
 
 router.use((req, res, next) => {
-    if (req.user) {
+    if (req.isAuthenticated()) {
         next()
     } else {
         res.redirect('/login')
@@ -56,7 +56,6 @@ router.get('/', (req, res) => {
 router.get('/checkout', (req, res) => {
 
     let cart = req.session.cart;
-    console.log(req.session.cart);
 
     let products = Object.keys(cart);
     let productQuery = {
@@ -75,13 +74,9 @@ router.get('/checkout', (req, res) => {
         }, 0);
 
         for(let index in productsResult){
-            console.log(productsResult[index].name)
             productsResult[index]['quantity'] = cart[productsResult[index]['_id']];
             prodNameIdPair[productsResult[index]._id] = productsResult[index].name;
         }
-
-        console.log('pair')
-        console.log(prodNameIdPair)
 
         res.render('./cart/checkout/checkout', {
             productsInCart: productsResult,
