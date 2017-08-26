@@ -56,7 +56,7 @@ router.get('/', (req, res) => {
 router.get('/checkout', (req, res) => {
 
     let cart = req.session.cart;
-    console.log(req.session.cart)
+    console.log(req.session.cart);
 
     let products = Object.keys(cart);
     let productQuery = {
@@ -67,17 +67,27 @@ router.get('/checkout', (req, res) => {
     };
 
     Product.find(productQuery, (err, productsResult)=>{
-        console.log(productsResult)
         if(err) throw err;
+        let prodNameIdPair = {};
 
         let priceSum = productsResult.reduce((sum, value)=>{
             return sum += value.price * cart[value._id]
         }, 0);
 
-        console.log(priceSum)
+        for(let index in productsResult){
+            console.log(productsResult[index].name)
+            productsResult[index]['quantity'] = cart[productsResult[index]['_id']];
+            prodNameIdPair[productsResult[index]._id] = productsResult[index].name;
+        }
+
+        console.log('pair')
+        console.log(prodNameIdPair)
 
         res.render('./cart/checkout/checkout', {
+            productsInCart: productsResult,
             priceToPay:priceSum,
+            prodNameIdPair: encodeURIComponent(JSON.stringify(prodNameIdPair)),
+            cart: encodeURIComponent(JSON.stringify(cart)),
             css: ['/cart/checkout/checkout.css'],
             js:
                 [

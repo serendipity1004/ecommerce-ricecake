@@ -36,8 +36,8 @@ router.post('/checkout/update_address', (req, res) => {
     for (let index in addressProfile) {
 
         let eachProfile = addressProfile[index];
-        console.log('each profile')
-        console.log(eachProfile)
+        console.log('each profile');
+        console.log(eachProfile);
 
         let frontendId = eachProfile.frontendId;
         let firstName = eachProfile.firstName;

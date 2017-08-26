@@ -2,11 +2,40 @@
 <form method="post" class="container padding-top-3x padding-bottom-2x">
 
     <h1 class="space-top-half">결제/배송 정보</h1>
+
     <div class="row padding-top">
 
         <!-- Checkout Form -->
         <div class="col-sm-8 padding-bottom">
+
             <div class="panel-group" id="accordion">
+                <div class="panel">
+                    <div class="panel-heading">
+                        <a class="panel-title" data-toggle="collapse" data-parent="#accordion" href="#collapseThree">
+                            장바구니 상품
+                        </a>
+                    </div>
+                    <div id="collapseThree" class="panel-collapse collapse collapse" role="tabpanel"
+                         aria-expanded="false">
+                        <div class="row products-container">
+                            {{#each productsInCart}}
+                                <div class="col-md-4 product-container">
+                                    <input class="prod-id" type="hidden" value="{{_id}}">
+                                    <img class="col-md-6" src="{{largeImagePath}}"/>
+                                    <div class="col-md-6 product-details">
+                                        <h5>{{name}}</h5>
+                                        <div class="count-input">
+                                            <a class="incr-btn decrease" href="#">–</a>
+                                            <input id="quantity" class="quantity" type="text" value="{{quantity}}">
+                                            <input id="price" type="hidden" value="{{price}}">
+                                            <a class="incr-btn increase" href="#">+</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            {{/each}}
+                        </div>
+                    </div>
+                </div><!-- .panel -->
                 <div class="panel">
                     <div class="panel-heading">
                         <a class="panel-title collapsed" data-toggle="collapse" data-parent="#accordion"
@@ -19,7 +48,8 @@
                             <div class="col-sm-12">
                                 <!-- Nav Tabs -->
                                 <ul class="nav-tabs" role="tablist">
-                                    <li class="address-tab active"><a href="#tab1" role="tab" data-toggle="tab">주소 1</a></li>
+                                    <li class="address-tab active"><a href="#tab1" role="tab" data-toggle="tab">주소 1</a>
+                                    </li>
                                 </ul><!-- .nav-tabs -->
                                 <!-- Tab panes -->
                                 <div class="tab-content">
@@ -28,19 +58,22 @@
                                             <div class="row">
                                                 <div class="col-sm-6">
                                                     <div class="form-element">
-                                                        <input type="text" class="form-control firstName address-form" placeholder="이름을 적어주세요">
+                                                        <input type="text" class="form-control firstName address-form"
+                                                               placeholder="이름을 적어주세요">
                                                     </div>
                                                 </div>
                                                 <div class="col-sm-6">
                                                     <div class="form-element">
-                                                        <input type="text" class="form-control lastName address-form" placeholder="성을 적어주세요">
+                                                        <input type="text" class="form-control lastName address-form"
+                                                               placeholder="성을 적어주세요">
                                                     </div>
                                                 </div>
                                             </div>
                                             <div class="row">
                                                 <div class="col-sm-12">
                                                     <div class="form-element">
-                                                        <input type="text" class="form-control google-map-address address-form"
+                                                        <input type="text"
+                                                               class="form-control google-map-address address-form"
                                                                value="{{searchAddress}}" placeholder="주소를 적어주세요">
                                                     </div>
                                                 </div>
@@ -48,26 +81,56 @@
                                             <div class="row">
                                                 <div class="col-sm-6">
                                                     <div class="form-element">
-                                                        <input type="text" class="form-control post-code address-form" placeholder="우편번호를 적어주세요">
+                                                        <input type="text" class="form-control post-code address-form"
+                                                               placeholder="우편번호를 적어주세요">
                                                     </div>
                                                 </div>
                                                 <div class="col-sm-6">
                                                     <div class="form-element">
-                                                        <input type="text" class="form-control phone-number address-form" placeholder="전화번호를 적어주세요">
+                                                        <input type="text"
+                                                               class="form-control phone-number address-form"
+                                                               placeholder="전화번호를 적어주세요">
                                                     </div>
                                                 </div>
+                                            </div>
+                                            <div class="row products-container">
+                                                {{#each productsInCart}}
+                                                    <div class="col-md-4 product-container">
+                                                        <input class="prod-id" type="hidden" value="{{_id}}">
+                                                        <img class="col-md-6" src="{{largeImagePath}}"/>
+                                                        <div class="col-md-6 product-details">
+                                                            <h5>{{name}}</h5>
+                                                            <div class="count-input">
+                                                                <a class="incr-btn decrease" href="#">–</a>
+                                                                <input class="quantity" type="text"
+                                                                       value="{{quantity}}">
+                                                                <input class="price" type="hidden" value="{{price}}">
+                                                                <a class="incr-btn increase" href="#">+</a>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                {{/each}}
                                             </div>
                                         </div>
                                     </div>
                                 </div><!-- .tab-content -->
                             </div><!-- .col-sm-6 -->
                         </div><!-- .row -->
-                        <button id="more-address-btn" class="btn btn-ghost btn-pill btn-sm btn-primary waves-effect waves-light add-address-btn">주소 추가하기</button>
-                        <button id="save-address-btn" class="btn btn-ghost btn-pill btn-sm btn-danger waves-effect waves-light save-address-btn">주소 저장하기</button>
+                        <button id="more-address-btn"
+                                class="btn btn-ghost btn-pill btn-sm btn-primary waves-effect waves-light add-address-btn">
+                            주소 추가하기
+                        </button>
+                        <button id="save-address-btn"
+                                class="btn btn-ghost btn-pill btn-sm btn-danger waves-effect waves-light save-address-btn">
+                            주소 저장하기
+                        </button>
                         <div class="row">
                             <div class="col-sm-12 text-gray" style="font-size: 0.8em">
                                 * 1개 이상의 주소를 사용하실때엔 주소 저장하기를 누르신다음에 주소 추가하기를 눌러주세요
                             </div>
+                        </div>
+                        <div id="quant-diff-alert" class="alert alert-danger collapse" role="alert">
+
                         </div>
                     </div>
                 </div><!-- .panel -->
@@ -92,12 +155,15 @@
                         </div>
                     </div>
                 </div><!-- .panel -->
+
             </div><!-- .panel-group -->
 
         </div><!-- .col-sm-8 -->
 
+
         <!-- Sidebar -->
         <div class="col-md-3 col-md-offset-1 col-sm-4 padding-bottom">
+
             <aside>
                 <h3>Cart total:</h3>
                 <h4>{{priceToPay}}</h4>
@@ -114,3 +180,8 @@
         </div><!-- .col-md-3.col-sm-4 -->
     </div><!-- .row -->
 </form><!-- .container -->
+
+<script>
+    let _cart = decodeURIComponent('{{{cart}}}');
+    let _products = decodeURIComponent('{{{prodNameIdPair}}}')
+</script>
